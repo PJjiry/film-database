@@ -2,21 +2,21 @@
   "name": "film-database",
   "version": "1.0.0",
   "description": "",
+  "type": "module",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/PJjiry/film-database.git"
+    "test": "ava",
+    "dev": "node --watch index.js"
   },
   "private": true,
   "dependencies": {
-    "@hono/node-server": "^1.14.1",
-    "better-sqlite3": "^11.9.1",
-    "dotenv": "^16.5.0",
-    "drizzle-orm": "^0.43.1",
+    "@hono/node-server": "^1.13.8",
+    "@hono/node-ws": "^1.1.1",
+    "@libsql/client": "^0.15.1",
+    "ava": "^6.2.0",
+    "drizzle-kit": "^0.30.5",
+    "drizzle-orm": "^0.41.0",
     "ejs": "^3.1.10",
-    "hono": "^4.7.8"
+    "hono": "^4.7.4"
   }
 }
