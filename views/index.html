@@ -3,8 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <title>Film database</title>
+    <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
+<h1>Film database</h1>
+
+<% if (currentUser.role === 'admin') { %>
+<a href="/movie/add">➕ Add new film</a>
+<% } %>
+
+<hr>
+
+<% movies.forEach(movie => { %>
+<div class="movie">
+    <div class="movie-title">
+        <a href="/movie/<%= movie.id %>"><%= movie.title %></a>
+    </div>
+    <div>
+        Average rating:
+        <% if (movie.ratingCount > 0) { %>
+        <%= (movie.ratingSum / movie.ratingCount).toFixed(2) %>/5
+        <% } else { %>
+        Without rating
+        <% } %>
+    </div>
+</div>
+<% }) %>
 
 </body>
 </html>
