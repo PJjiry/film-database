@@ -60,7 +60,7 @@ app.post('/movie/:id/rate', async (c) => {
     return c.redirect(`/movie/${id}`)
 })
 
-app.get('/movie/add', async (c) => {
+app.get('/add', async (c) => {
     const currentUser = c.get('currentUser')
     if (currentUser.role !== 'admin') return c.text('Forbidden', 403)
 
@@ -68,7 +68,7 @@ app.get('/movie/add', async (c) => {
     return c.html(html)
 })
 
-app.post('/movie/add', async (c) => {
+app.post('/add', async (c) => {
     const currentUser = c.get('currentUser')
     if (currentUser.role !== 'admin') return c.text('Forbidden', 403)
 
