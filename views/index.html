@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <title>Film database</title>
     <link rel="stylesheet" href="/styles.css">
 </head>
@@ -9,26 +10,35 @@
 <h1>Film database</h1>
 
 <% if (currentUser.role === 'admin') { %>
-<a href="/add">➕ Add new film</a>
+<a href="/add" id="add-film-button">
+    <button>Add new film</button>
+</a>
 <% } %>
 
 <hr>
 
-<% movies.forEach(movie => { %>
-<div class="movie">
-    <div class="movie-title">
-        <a href="/movie/<%= movie.id %>"><%= movie.title %></a>
-    </div>
-    <div>
-        Average rating:
-        <% if (movie.ratingCount > 0) { %>
-        <%= (movie.ratingSum / movie.ratingCount).toFixed(2) %>/5
-        <% } else { %>
-        Without rating
-        <% } %>
-    </div>
-</div>
-<% }) %>
+<% if (movies.length === 0 && currentUser.role === 'admin') { %>
+<h2 class="no-movies">No movies added ... add one by clicking on the Add new film button!</h2>
+<% } %>
 
+<% if (movies.length === 0 && currentUser.role !== 'admin') { %>
+<h2 class="no-movies">No movies added! Contact your administrator to add some movies to rate!</h2>
+<% } %>
+
+<% movies.forEach(movie => { %>
+<a href="/movie/<%= movie.id %>">
+    <div class="movie">
+        <h2><%= movie.title %></h2>
+        <div>
+            Average rating:
+            <% if (movie.ratingCount > 0) { %>
+            <%= (movie.ratingSum / movie.ratingCount).toFixed(2) %>/5
+            <% } else { %>
+            Without rating
+            <% } %>
+        </div>
+    </div>
+</a>
+<% }) %>
 </body>
 </html>

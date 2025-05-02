@@ -6,42 +6,52 @@
     <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
-<h1><%= movie.title %></h1>
+<div class="movie-detail">
+    <h1><%= movie.title %></h1>
 
-<p><%= movie.description %></p>
+    <p><%= movie.description %></p>
 
-<p>
-    Average rating:
-    <% if (movie.ratingCount > 0) { %>
-    <%= (movie.ratingSum / movie.ratingCount).toFixed(2) %>/5
-    <% } else { %>
-    Without rating
+    <p>
+        <strong>Average rating:</strong>
+        <% if (movie.ratingCount > 0) { %>
+        <%= (movie.ratingSum / movie.ratingCount).toFixed(2) %>/5
+        <% } else { %>
+        Without rating
+        <% } %>
+    </p>
+
+    <% if (currentUser || currentUser.role === 'admin') { %>
+    <h2>Rate the film</h2>
+    <form action="/movie/<%= movie.id %>/rate" method="post">
+        <select name="rating" required>
+            <option value="1">1 - terrible</option>
+            <option value="2">2 - bad</option>
+            <option value="3">3 - average</option>
+            <option value="4">4 - great</option>
+            <option value="5">5 - awesome</option>
+        </select>
+        <button type="submit">Rate</button>
+    </form>
     <% } %>
-</p>
 
-<% if (currentUser.role === 'user' || currentUser.role === 'admin') { %>
-<h2>Rate the film</h2>
-<form action="/movie/<%= movie.id %>/rate" method="post">
-    <select name="rating" required>
-        <option value="1">1 - bad</option>
-        <option value="2">2</option>
-        <option value="3">3 - average</option>
-        <option value="4">4</option>
-        <option value="5">5 - great</option>
-    </select>
-    <button type="submit">Rate</button>
-</form>
-<% } %>
+    <% if (currentUser.role === 'admin') { %>
+    <hr>
+    <div class="movie-actions">
+        <a href="/movie/<%= movie.id %>/edit">
+            <button class="edit-btn">Edit</button>
+        </a>
+        <form action="/movie/<%= movie.id %>/delete" method="post" class="inline-form">
+            <button type="submit" onclick="return confirm('Do you really want to delete the movie?')"
+                    class="delete-btn">Delete
+            </button>
+        </form>
+    </div>
+    <% } %>
 
-<% if (currentUser.role === 'admin') { %>
-<hr>
-<a href="/movie/<%= movie.id %>/edit">✏️ Edit</a>
-<form action="/movie/<%= movie.id %>/delete" method="post" style="display:inline;">
-    <button type="submit" onclick="return confirm('Do you really want to delete the movie?')">🗑️ Delete</button>
-</form>
-<% } %>
-
-<hr>
-<a href="/">← Back to the list</a>
+    <hr>
+    <a href="/">
+        <button>← Back to the list</button>
+    </a>
+</div>
 </body>
 </html>

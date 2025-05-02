@@ -8,16 +8,18 @@
 <body>
 <h1>Add new film</h1>
 
-<form action="/add" method="post">
+<form action="/add" method="post" class="movie-form">
     <label for="title">Movie title</label>
-    <input type="text" name="title" id="title" required>
+    <input type="text" name="title" id="title" required maxlength="100">
 
     <label for="description">Description</label>
-    <textarea name="description" id="description" required></textarea>
+    <textarea name="description" id="description" required maxlength="400"></textarea>
 
     <button type="submit">Submit</button>
 </form>
 
-<a href="/">← Back to the list</a>
+<a href="/">
+    <button>← Back to the list</button>
+</a>
 </body>
 </html>
