@@ -11,5 +11,5 @@ export const moviesTable = sqliteTable('movies', {
 export const usersTable = sqliteTable('users', {
     id: integer('id').primaryKey({ autoIncrement: true }),
     username: text('username').notNull().unique(),
-    role: text('role').notNull(), // "admin" nebo "user"
+    role: text('role').notNull(),
 })
