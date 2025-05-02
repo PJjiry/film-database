@@ -14,6 +14,8 @@
 
     <label for="description">Description</label>
     <textarea name="description" id="description" required maxlength="400"><%= movie.description %></textarea>
+    <label for="imageUrl">Image URL</label>
+    <input type="text" name="imageUrl" id="imageUrl" placeholder="https://..." value="<%= movie.imageUrl %>" required>
 
     <button type="submit">Save changes</button>
 </form>

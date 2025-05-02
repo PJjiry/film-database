@@ -78,10 +78,12 @@ app.post('/add', async (c) => {
     const form = await c.req.formData()
     const title = form.get('title')
     const description = form.get('description')
+    const imageUrl = form.get('imageUrl')
 
     await db.insert(moviesTable).values({
         title,
         description,
+        imageUrl,
         ratingSum: 0,
         ratingCount: 0,
     })
@@ -109,9 +111,10 @@ app.post('/movie/:id/edit', async (c) => {
     const form = await c.req.formData()
     const title = form.get('title')
     const description = form.get('description')
+    const imageUrl = form.get('imageUrl')
 
     await db.update(moviesTable)
-        .set({ title, description })
+        .set({ title, description, imageUrl })
         .where(eq(moviesTable.id, id))
 
     return c.redirect(`/movie/${id}`)

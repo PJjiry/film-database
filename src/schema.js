@@ -4,6 +4,7 @@ export const moviesTable = sqliteTable('movies', {
     id: integer('id').primaryKey({ autoIncrement: true }),
     title: text('title').notNull(),
     description: text('description').notNull(),
+    imageUrl: text('image_url').notNull(),
     ratingSum: integer('rating_sum').default(0).notNull(),
     ratingCount: integer('rating_count').default(0).notNull(),
 })
