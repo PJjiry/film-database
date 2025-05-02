@@ -28,6 +28,8 @@
 <% movies.forEach(movie => { %>
 <a href="/movie/<%= movie.id %>">
     <div class="movie">
+        <img src="<%= movie.imageUrl %>" alt="<%= movie.title %>" class="movie-image">
+        <div class="movie-content">
         <h2><%= movie.title %></h2>
         <div>
             Average rating:
@@ -36,6 +38,7 @@
             <% } else { %>
             This movie was not rated yet.
             <% } %>
+        </div>
         </div>
     </div>
 </a>
