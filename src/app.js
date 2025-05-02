@@ -43,6 +43,9 @@ app.get('/movie/:id', async (c) => {
 })
 
 app.post('/movie/:id/rate', async (c) => {
+    const currentUser = c.get('currentUser')
+    if (!currentUser) return c.text('Forbidden', 403)
+
     const id = Number(c.req.param('id'))
     const form = await c.req.formData()
     const rating = Number(form.get('rating'))
@@ -57,7 +60,7 @@ app.post('/movie/:id/rate', async (c) => {
         })
         .where(eq(moviesTable.id, id))
 
-    return c.redirect(`/movie/${id}`)
+    return c.redirect(`/`)
 })
 
 app.get('/add', async (c) => {
