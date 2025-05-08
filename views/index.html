@@ -7,9 +7,16 @@
     <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
-<h1>Film database</h1>
+<div class="header">
+    <h1>Film database</h1>
+    <% if (!currentUser) { %>
+    <a href="/login" class="btn login-btn">Login</a>
+    <% } else { %>
+    <p>Logged in as <strong><%= currentUser.username %></strong></p>
+    <% } %>
+</div>
 
-<% if (currentUser.role === 'admin') { %>
+<% if (currentUser && currentUser.role === 'admin') { %>
 <a href="/add" id="add-film-button">
     <button>Add new film</button>
 </a>
@@ -17,11 +24,11 @@
 
 <hr>
 
-<% if (movies.length === 0 && currentUser.role === 'admin') { %>
+<% if (movies.length === 0 && currentUser && currentUser.role === 'admin') { %>
 <h2 class="no-movies">No movies added ... add one by clicking on the Add new film button!</h2>
 <% } %>
 
-<% if (movies.length === 0 && currentUser.role !== 'admin') { %>
+<% if (movies.length === 0 && currentUser && currentUser.role !== 'admin') { %>
 <h2 class="no-movies">No movies added! Contact your administrator to add some movies to rate!</h2>
 <% } %>
 

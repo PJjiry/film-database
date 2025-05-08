@@ -21,7 +21,7 @@
         <% } %>
     </p>
 
-    <% if (currentUser || currentUser.role === 'admin') { %>
+    <% if (currentUser) { %>
     <h2>Rate the film</h2>
     <form action="/movie/<%= movie.id %>/rate" method="post">
         <select name="rating" required>
@@ -35,7 +35,7 @@
     </form>
     <% } %>
 
-    <% if (currentUser.role === 'admin') { %>
+    <% if (currentUser && currentUser.role === 'admin') { %>
     <hr>
     <div class="movie-actions">
         <a href="/movie/<%= movie.id %>/edit">
