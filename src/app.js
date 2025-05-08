@@ -4,8 +4,9 @@ import { logger } from 'hono/logger'
 import { renderFile } from 'ejs'
 import { drizzle } from 'drizzle-orm/libsql'
 import { eq } from 'drizzle-orm'
-import {moviesTable, usersTable} from "./schema.js";
-
+import { getCookie } from "hono/cookie";
+import {moviesTable} from "./schema.js";
+import {getUserByToken, usersRouter} from "./users.js";
 
 export const db = drizzle({
     connection: "file:db.sqlite",
@@ -13,15 +14,20 @@ export const db = drizzle({
 })
 
 export const app = new Hono()
-
 app.use(logger())
+
 app.use(serveStatic({ root: './public' }))
 
 app.use(async (c, next) => {
-    const currentUser = await db.select().from(usersTable).where(eq(usersTable.id, 1)).get()
-    c.set('currentUser', currentUser)
-    await next()
-})
+    const token = getCookie(c, "token");
+    const currentUser = await getUserByToken(token);
+    if (currentUser) {
+        c.set("currentUser", currentUser);
+    }
+    await next();
+});
+
+app.route("/", usersRouter)
 
 app.get('/', async (c) => {
     const movies = await db.select().from(moviesTable).all()
@@ -64,7 +70,8 @@ app.post('/movie/:id/rate', async (c) => {
 })
 
 app.get('/add', async (c) => {
-    const currentUser = c.get('currentUser')
+    const currentUser = c.get('currentUser');
+    if (!currentUser) return c.text('Unauthorized', 401);
     if (currentUser.role !== 'admin') return c.text('Forbidden', 403)
 
     const html = await renderFile('views/add.html')
@@ -92,7 +99,8 @@ app.post('/add', async (c) => {
 })
 
 app.get('/movie/:id/edit', async (c) => {
-    const currentUser = c.get('currentUser')
+    const currentUser = c.get('currentUser');
+    if (!currentUser) return c.text('Unauthorized', 401);
     if (currentUser.role !== 'admin') return c.text('Forbidden', 403)
 
     const id = Number(c.req.param('id'))
