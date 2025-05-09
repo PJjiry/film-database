@@ -12,7 +12,10 @@
     <% if (!currentUser) { %>
     <a href="/login" class="btn login-btn">Login</a>
     <% } else { %>
-    <p>Logged in as <strong><%= currentUser.username %></strong></p>
+    <div class="user-info">
+        <a href="/logout" class="btn logout-btn"><button>Logout</button></a>
+        <p>Logged in as <strong><%= currentUser.username %></strong></p>
+    </div>
     <% } %>
 </div>
 
