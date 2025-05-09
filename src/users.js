@@ -21,7 +21,7 @@ usersRouter.post("/register", async (c) => {
     const user = await createUser(username, password, "user");
 
     if (!user) {
-        const rendered = await renderFile("views/register.html", { error: "Username already exists" });
+        const rendered = await renderFile("views/register.html", { error: "Username already exists!!" });
         return c.html(rendered, 400);
     }
 
@@ -47,7 +47,7 @@ usersRouter.post("/login", async (c) => {
         .get();
 
     if (!user) {
-           const rendered = await renderFile("views/login.html", { error: "Invalid username" });
+           const rendered = await renderFile("views/login.html", { error: "Invalid username!!" });
            return c.html(rendered, 401);
          }
 
@@ -56,7 +56,7 @@ usersRouter.post("/login", async (c) => {
         .toString("hex");
 
     if (hash !== user.hashedPassword) {
-        const rendered = await renderFile("views/login.html", { error: "Invalid password" });
+        const rendered = await renderFile("views/login.html", { error: "Invalid password!!" });
         return c.html(rendered, 401);
     }
 
@@ -67,10 +67,14 @@ usersRouter.post("/login", async (c) => {
 
 usersRouter.get("/logout", (c) => {
     deleteCookie(c, "token");
-    return c.redirect("/");
+    return c.redirect("/login");
 });
 
 export const createUser = async (username, password, role = "user") => {
+    if (await db.select().from(usersTable).where(eq(usersTable.username, username)).get()) {
+        return null;
+    }
+
     const salt = crypto.randomBytes(16).toString("hex");
     const hashedPassword = crypto
         .pbkdf2Sync(password, salt, 100000, 64, "sha512")
