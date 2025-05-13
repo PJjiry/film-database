@@ -5,17 +5,20 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "test": "ava",
-    "dev": "node --watch index.js"
+    "dev": "node --watch index.js",
+    "test:e2e": "npx playwright test"
   },
   "private": true,
   "dependencies": {
     "@hono/node-server": "^1.13.8",
     "@hono/node-ws": "^1.1.1",
     "@libsql/client": "^0.15.1",
+    "@playwright/test": "^1.52.0",
     "drizzle-kit": "^0.30.5",
     "drizzle-orm": "^0.41.0",
     "ejs": "^3.1.10",
-    "hono": "^4.7.4"
+    "hono": "^4.7.4",
+    "npx": "^10.2.2",
+    "playwright": "^1.52.0"
   }
 }
