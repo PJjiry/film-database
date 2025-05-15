@@ -6,6 +6,7 @@ test.describe.serial("Film management", () => {
     test.beforeEach(async ({browser}) => {
         page = await browser.newPage();
     });
+
     test.afterEach(async () => {
         await page.close();
     });
