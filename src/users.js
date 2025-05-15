@@ -10,6 +10,7 @@ export const usersRouter = new Hono();
 
 usersRouter.get("/register", async (c) => {
     const rendered = await renderFile("views/register.html", { error: "" });
+
     return c.html(rendered);
 });
 
@@ -32,6 +33,7 @@ usersRouter.post("/register", async (c) => {
 
 usersRouter.get("/login", async (c) => {
     const rendered = await renderFile("views/login.html", { error: "" });
+
     return c.html(rendered);
 });
 
@@ -67,6 +69,7 @@ usersRouter.post("/login", async (c) => {
 
 usersRouter.get("/logout", (c) => {
     deleteCookie(c, "token");
+
     return c.redirect("/login");
 });
 

@@ -1,6 +1,5 @@
 import { Hono } from 'hono'
 import { serveStatic } from '@hono/node-server/serve-static'
-import { logger } from 'hono/logger'
 import { renderFile } from 'ejs'
 import { drizzle } from 'drizzle-orm/libsql'
 import { eq } from 'drizzle-orm'
@@ -14,7 +13,6 @@ export const db = drizzle({
 })
 
 export const app = new Hono()
-app.use(logger())
 
 app.use(serveStatic({ root: './public' }))
 
@@ -24,6 +22,7 @@ app.use(async (c, next) => {
     if (currentUser) {
         c.set("currentUser", currentUser);
     }
+
     await next();
 });
 
@@ -32,8 +31,8 @@ app.route("/", usersRouter)
 app.get('/', async (c) => {
     const movies = await db.select().from(moviesTable).all()
     const currentUser = c.get('currentUser')
-
     const html = await renderFile('views/index.html', { movies, currentUser })
+
     return c.html(html)
 })
 
@@ -43,8 +42,8 @@ app.get('/movie/:id', async (c) => {
     if (!movie) return c.notFound()
 
     const currentUser = c.get('currentUser')
-
     const html = await renderFile('views/detail.html', { movie, currentUser })
+
     return c.html(html)
 })
 
@@ -75,6 +74,7 @@ app.get('/add', async (c) => {
     if (currentUser.role !== 'admin') return c.text('Forbidden', 403)
 
     const html = await renderFile('views/add.html')
+
     return c.html(html)
 })
 
@@ -108,6 +108,7 @@ app.get('/movie/:id/edit', async (c) => {
     if (!movie) return c.notFound()
 
     const html = await renderFile('views/edit.html', { movie })
+
     return c.html(html)
 })
 

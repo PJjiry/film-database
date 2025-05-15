@@ -11,7 +11,6 @@
   "private": true,
   "dependencies": {
     "@hono/node-server": "^1.13.8",
-    "@hono/node-ws": "^1.1.1",
     "@libsql/client": "^0.15.1",
     "@playwright/test": "^1.52.0",
     "drizzle-kit": "^0.30.5",

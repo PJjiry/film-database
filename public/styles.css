@@ -144,6 +144,7 @@ form[method="post"][style*="display:inline"] button {
     margin-left: 1rem;
     background-color: #d9534f;
 }
+
 form[method="post"][style*="display:inline"] button:hover {
     background-color: #c9302c;
 }
@@ -168,6 +169,7 @@ a[href="/"]  button{
 a[href="/"]  button:hover {
     background-color: #d5d5d5;
 }
+
 .movie-detail {
     background-color: #ffffff;
     padding: 2rem;
